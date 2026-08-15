@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>CrimeIQ | Arrest Analysis</title>
+
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='js/common.js') }}"></script>
+
+</head>
+
+<body>
+
+<div class="app">
+
+<aside class="sidebar">
+
+<div class="brand">
+    <div>
+        <h2>Analysis</h2>
+        <span>Chicago Crime Intelligence</span>
+    </div>
+</div>
+
+<nav>
+
+<a href="/"><span>⌂</span>Dashboard</a>
+
+<a href="/case1"><span>▥</span>Crime Types</a>
+
+<a class="active" href="/case2"><span>◉</span>Arrest Analysis</a>
+
+<a href="/case3"><span>◷</span>Time & Patterns</a>
+
+<a href="/case4"><span>⌖</span>MySQL Reporting</a>
+
+<a href="/reports"><span>▣</span>Reports & Charts</a>
+
+<a href="/patrol-requests"><span>🚓</span>CRUD Patrol Management</a>
+
+</nav>
+
+<div class="sidebar-bottom">
+
+<div class="system-status">
+<span class="status-dot"></span>
+System Online
+</div>
+
+<small>
+CPD Crime Analytics<br>
+2015 – 2023
+</small>
+
+</div>
+
+</aside>
+
+
+<main class="main">
+
+<header class="topbar">
+
+<div>
+
+<p class="eyebrow">
+USE CASE 02
+</p>
+
+<h1>
+Exploratory Analysis & Visualization of Crime
+</h1>
+
+<p class="subtitle">
+Analyze yearly crime trends, categories, arrest outcomes, and month/day patterns.
+</p>
+
+</div>
+
+</header>
+
+
+<section class="kpi-grid">
+
+<div class="kpi-card">
+
+<div class="kpi-icon red">!</div>
+
+<div>
+<span>Total Arrests</span>
+<strong id="totalArrests">—</strong>
+<small>Recorded arrests</small>
+</div>
+
+</div>
+
+
+<div class="kpi-card">
+
+<div class="kpi-icon purple">%</div>
+
+<div>
+<span>Arrest Rate</span>
+<strong id="case2Rate">—</strong>
+<small>Overall percentage</small>
+</div>
+
+</div>
+
+
+<div class="kpi-card">
+
+<div class="kpi-icon blue">↗</div>
+
+<div>
+<span>Highest Arrest Year</span>
+<strong id="highestArrestYear">—</strong>
+<small id="highestArrestRate">Based on arrest rate</small>
+</div>
+
+</div>
+
+</section>
+
+
+<section class="dashboard-grid">
+
+<div class="panel">
+
+<div class="panel-header">
+
+<div>
+<h3>Arrest vs No Arrest</h3>
+<p>Overall crime outcomes</p>
+</div>
+
+</div>
+
+<div class="chart-container doughnut">
+
+<canvas id="arrestOutcomeChart"></canvas>
+
+</div>
+
+</div>
+
+
+<div class="panel large">
+
+<div class="panel-header">
+
+<div>
+<h3>Arrest Rate by Year</h3>
+<p>Compare arrest outcomes across years</p>
+</div>
+
+</div>
+
+<div class="chart-container">
+
+<canvas id="arrestYearChart"></canvas>
+
+</div>
+
+</div>
+
+
+<div class="panel">
+
+<div class="panel-header">
+
+<div>
+<h3>Crime Distribution</h3>
+<p>Share of major categories</p>
+</div>
+
+</div>
+
+<div class="chart-container doughnut">
+
+<canvas id="crimeDistributionChart"></canvas>
+
+</div>
+
+</div>
+
+<div class="panel large">
+
+<div class="panel-header">
+
+<div>
+<h3>Arrests by Crime Type</h3>
+<p>Crime categories producing the highest number of arrests</p>
+</div>
+
+</div>
+
+<div class="chart-container">
+
+<canvas id="arrestCrimeChart"></canvas>
+
+</div>
+
+</div>
+
+
+<div class="panel">
+
+<div class="panel-header">
+<h3>Arrest Insights</h3>
+</div>
+
+<div id="case2Insights"
+     class="insights">
+
+Loading insights...
+
+</div>
+
+</div>
+
+</section>
+
+<section class="panel chart-gallery">
+<div class="panel-header"><div><h3>Generated Analysis Charts</h3><p>Reproducible Matplotlib and Seaborn outputs</p></div></div>
+<img src="/charts/01_crimes_by_year.png" alt="Crimes by year chart">
+<img src="/charts/02_top10_categories.png" alt="Top 10 categories chart">
+<img src="/charts/03_arrest_rate_by_year.png" alt="Arrest rate by year chart">
+<img src="/charts/04_month_day_heatmap.png" alt="Month and day heatmap">
+<img src="/charts/05_top10_communities.png" alt="Top 10 community areas by crime count chart">
+</section>
+
+</main>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/case2.js') }}"></script>
+
+</body>
+
+</html>

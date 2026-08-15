@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports & Charts | Chicago Crime Intelligence</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='js/common.js') }}"></script>
+
+</head>
+
+<body>
+
+<div class="app">
+
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div>
+                <h2>Analysis</h2>
+                <span>Chicago Crime Intelligence</span>
+            </div>
+        </div>
+
+        <nav>
+            <a href="/"><span>⌂</span>Dashboard</a>
+            <a href="/case1"><span>▥</span>Crime Types</a>
+            <a href="/case2"><span>◉</span>Arrest Analysis</a>
+            <a href="/case3"><span>◷</span>Time & Patterns</a>
+            <a href="/case4"><span>⌖</span>MySQL Reporting</a>
+            <a class="active" href="/reports"><span>▣</span>Reports & Charts</a>
+            <a href="/patrol-requests"><span>🚓</span>CRUD Patrol Management</a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="system-status">
+                <span class="status-dot"></span>
+                System Online
+            </div>
+            <small>
+                CPD Crime Analytics<br>
+                2015 – 2023
+            </small>
+        </div>
+
+    </aside>
+
+    <main class="main">
+        <header class="topbar">
+            <div>
+                <p class="eyebrow">REPORTS PORTAL</p>
+                <h1>Reports & Chart Downloads</h1>
+                <p class="subtitle">MySQL view exports, dashboards, and generated Python analysis output for Chicago crime reporting.</p>
+            </div>
+        </header>
+
+        <section class="dashboard-grid">
+            <div class="panel large">
+                <div class="panel-header">
+                    <div>
+                        <h3>Generated Reports</h3>
+                        <p>Download the analytical outputs created in the reports folder.</p>
+                    </div>
+                </div>
+                <div class="stats-list">
+                    <div class="outlier-item"><span>crime_count_per_year.csv</span><a href="/reports/crime_count_per_year.csv" download>Download</a></div>
+                    <div class="outlier-item"><span>arrest_count_per_year.csv</span><a href="/reports/arrest_count_per_year.csv" download>Download</a></div>
+                    <div class="outlier-item"><span>top5_crime_types.csv</span><a href="/reports/top5_crime_types.csv" download>Download</a></div>
+                    <div class="outlier-item"><span>top10_iucr_codes.csv</span><a href="/reports/top10_iucr_codes.csv" download>Download</a></div>
+                    <div class="outlier-item"><span>missing_values.csv</span><a href="/reports/missing_values.csv" download>Download</a></div>
+                    <div class="outlier-item"><span>crime_by_hour.csv</span><a href="/reports/crime_by_hour.csv" download>Download</a></div>
+                    <div class="outlier-item"><span>monthly_crime_frequency.csv</span><a href="/reports/monthly_crime_frequency.csv" download>Download</a></div>
+                    <div class="outlier-item"><span>top10_community_areas.csv</span><a href="/reports/top10_community_areas.csv" download>Download</a></div>
+                    <div class="outlier-item"><span>community_outlier_summary.csv</span><a href="/reports/community_outlier_summary.csv" download>Download</a></div>
+                    <div class="outlier-item"><span>arrest_rate_by_year.csv</span><a href="/reports/arrest_rate_by_year.csv" download>Download</a></div>
+                </div>
+            </div>
+
+            <div class="panel large">
+                <div class="panel-header">
+                    <div>
+                        <h3>Chart Gallery</h3>
+                        <p>Static visual output exported from Matplotlib and Seaborn.</p>
+                    </div>
+                </div>
+                <div class="chart-gallery">
+                    <img src="/charts/01_crimes_by_year.png" alt="Crime trend chart">
+                    <img src="/charts/02_top10_categories.png" alt="Top crimes chart">
+                    <img src="/charts/06_crimes_by_hour.png" alt="Hourly crime chart">
+                    <img src="/charts/07_community_boxplot.png" alt="Community boxplot">
+                    <img src="/charts/08_correlation_heatmap.png" alt="Correlation heatmap">
+                    <img src="/charts/09_mysql_crimes_by_year.png" alt="MySQL yearly crime chart">
+                    <img src="/charts/10_mysql_top5_crime_types.png" alt="MySQL top crime types chart">
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+</body>
+</html>

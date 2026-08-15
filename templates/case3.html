@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>CrimeIQ | Statistical Patterns</title>
+
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='js/common.js') }}"></script>
+<script src="{{ url_for('static', filename='js/case3.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix@2.0.1/dist/chartjs-chart-matrix.min.js"></script>
+
+</head>
+
+<body>
+
+<div class="app">
+
+<aside class="sidebar">
+
+<div class="brand">
+
+<div>
+<h2>Analysis</h2>
+<span>Chicago Crime Intelligence</span>
+</div>
+
+</div>
+
+<nav>
+
+<a href="/"><span>⌂</span>Dashboard</a>
+
+<a href="/case1"><span>▥</span>Crime Types</a>
+
+<a href="/case2"><span>◉</span>Arrest Analysis</a>
+
+<a class="active" href="/case3"><span>◷</span>Time & Patterns</a>
+
+<a href="/case4"><span>⌖</span>MySQL Reporting</a>
+
+<a href="/reports"><span>▣</span>Reports & Charts</a>
+
+<a href="/patrol-requests"><span>🚓</span>CRUD Patrol Management</a>
+
+</nav>
+
+<div class="sidebar-bottom">
+
+<div class="system-status">
+<span class="status-dot"></span>
+System Online
+</div>
+
+<small>
+CPD Crime Analytics<br>
+2015 – 2023
+</small>
+
+</div>
+
+</aside>
+
+
+<main class="main">
+
+<header class="topbar">
+
+<div>
+
+<p class="eyebrow">
+USE CASE 03
+</p>
+
+<h1>
+Statistical Insights & Pattern Detection
+</h1>
+
+<p class="subtitle">
+Discover temporal patterns, crime intensity
+and statistical outliers.
+</p>
+
+</div>
+
+</header>
+
+
+<section class="dashboard-grid case3-grid">
+
+<div class="panel large">
+
+<div class="panel-header">
+
+<div>
+<h3>Crime Intensity by Hour</h3>
+<p>Hourly distribution of reported crimes</p>
+</div>
+
+</div>
+
+<div class="chart-container">
+<canvas id="hourChart"></canvas>
+</div>
+
+</div>
+
+<div class="panel large">
+
+<div class="panel-header">
+
+<div>
+<h3>Month × Day of Week</h3>
+<p>Crime frequency heatmap</p>
+</div>
+
+</div>
+
+<div id="heatmapChart" class="heatmap-wrapper">
+</div>
+
+</div>
+
+<div class="panel large">
+
+<div class="panel-header">
+
+<div>
+<h3>Monthly Crime Counts</h3>
+<p>Reported crimes by month</p>
+</div>
+
+</div>
+
+<div class="chart-container">
+<canvas id="monthlyChart"></canvas>
+</div>
+
+</div>
+
+<div class="panel large">
+
+<div class="panel-header">
+
+<div>
+<h3>Daily Crime Counts</h3>
+<p>Reported crimes by weekday</p>
+</div>
+
+</div>
+
+<div class="chart-container">
+<canvas id="dailyChart"></canvas>
+</div>
+
+</div>
+
+<div class="panel large">
+
+<div class="panel-header">
+
+<div>
+<h3>Correlation Matrix</h3>
+<p>Relationship between numeric crime features</p>
+</div>
+
+</div>
+
+<div id="correlationMatrix" class="correlation-grid"></div>
+
+</div>
+
+<div class="panel">
+
+<div class="panel-header">
+<h3>IQR Outliers</h3>
+</div>
+
+<div id="iqrStats" class="stats-list">
+Loading...
+</div>
+
+</div>
+
+</section>
+
+<section class="panel"><div class="panel-header"><h3>Key Questions Answered</h3></div><div id="case3Insights" class="insights">Loading insights...</div></section>
+<section class="panel chart-gallery"><div class="panel-header"><div><h3>Generated Analysis Charts</h3><p>Community clusters use the IQR method to identify outliers.</p></div></div>
+<img src="/charts/06_crimes_by_hour.png" alt="Crimes by hour chart">
+<img src="/charts/07_community_boxplot.png" alt="Community area box plot">
+<img src="/charts/08_correlation_heatmap.png" alt="Correlation heatmap">
+</section>
+
+</main>
+
+</div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>MySQL Reporting & Integration | Analysis</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='js/common.js') }}"></script>
+
+</head>
+
+
+<body>
+
+<div class="app">
+
+    <!-- ================================================= -->
+    <!-- SIDEBAR -->
+    <!-- ================================================= -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div>
+
+                <h2>Analysis</h2>
+
+                <span>
+                    Chicago Crime Intelligence
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <nav>
+
+            <a href="/">
+                <span>⌂</span>
+                Dashboard
+            </a>
+
+            <a href="/case1">
+                <span>▥</span>
+                Crime Types
+            </a>
+
+            <a href="/case2">
+                <span>◉</span>
+                Arrest Analysis
+            </a>
+
+            <a href="/case3">
+                <span>◷</span>
+                Time & Patterns
+            </a>
+
+            <a
+                href="/case4"
+                class="active"
+            >
+                <span>⌖</span>
+                MySQL Reporting
+            </a>
+
+            <a href="/reports"><span>▣</span>Reports & Charts</a>
+
+            <a href="/patrol-requests">
+                <span>🚓</span>
+                CRUD Patrol Management
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <div class="system-status">
+
+                <span class="status-dot"></span>
+
+                System Online
+
+            </div>
+
+            <small>
+
+                CPD Crime Analytics
+                <br>
+                2015 – 2023
+
+            </small>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================================================= -->
+    <!-- MAIN -->
+    <!-- ================================================= -->
+
+    <main class="main">
+
+
+        <header class="topbar">
+
+            <div>
+
+                <p class="eyebrow">
+                    USE CASE 04
+                </p>
+
+                <h1>
+                    MySQL Reporting & Integration
+                </h1>
+
+                <p class="subtitle">
+                    Store, query, and present Chicago crime reporting data using SQLite locally or MySQL when configured.
+                </p>
+
+            </div>
+
+
+            <button
+                class="primary-btn"
+                onclick="loadCase4()"
+            >
+                ↻ Refresh Analysis
+            </button>
+
+        </header>
+
+
+        <!-- ================================================= -->
+        <!-- STAT CARDS -->
+        <!-- ================================================= -->
+
+        <section class="stats-grid">
+
+
+            <div class="stat-card">
+
+                <span>🔥</span>
+
+                <div>
+
+                    <small>
+                        Highest Crime Area
+                    </small>
+
+                    <strong id="highestCommunity">
+                        —
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <span>▥</span>
+
+                <div>
+
+                    <small>
+                        Top IUCR Code
+                    </small>
+
+                    <strong id="topIUCR">
+                        —
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <span>⌖</span>
+
+                <div>
+
+                    <small>
+                        Communities Analyzed
+                    </small>
+
+                    <strong id="communityCount">
+                        —
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <span>⚠</span>
+
+                <div>
+
+                    <small>
+                        Statistical Outliers
+                    </small>
+
+                    <strong id="outlierCount">
+                        —
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- CHARTS -->
+        <!-- ================================================= -->
+
+        <section class="dashboard-grid">
+
+
+            <!-- TIME INTENSITY -->
+
+            <div class="panel large">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h3>
+                            Crime Intensity by Time
+                        </h3>
+
+                        <p>
+                            Crime counts by hour of the day
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="chart-container">
+
+                    <canvas id="hourlyChart"></canvas>
+
+                </div>
+
+            </div>
+
+
+            <!-- HOTSPOTS -->
+
+            <div class="panel large">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h3>
+                            Crime Hotspots
+                        </h3>
+
+                        <p>
+                            Highest crime community areas
+                        </p>
+
+                    </div>
+
+                    <span class="badge">
+                        TOP 10
+                    </span>
+
+                </div>
+
+
+                <div class="chart-container">
+
+                    <canvas id="hotspotChart"></canvas>
+
+                </div>
+
+            </div>
+
+
+            <!-- IUCR -->
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h3>
+                            Top IUCR Codes
+                        </h3>
+
+                        <p>
+                            Most common reporting codes
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="chart-container">
+
+                    <canvas id="iucrChart"></canvas>
+
+                </div>
+
+            </div>
+
+
+            <!-- COMMUNITY -->
+
+            <div class="panel large">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h3>
+                            Community Crime Distribution
+                        </h3>
+
+                        <p>
+                            Highest reported crime counts
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="chart-container">
+
+                    <canvas id="communityChart"></canvas>
+
+                </div>
+
+            </div>
+
+
+            <!-- DISTRICT -->
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h3>
+                            District Distribution
+                        </h3>
+
+                        <p>
+                            Crime distribution by police district
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="chart-container doughnut">
+
+                    <canvas id="districtChart"></canvas>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- HEATMAP -->
+        <!-- ================================================= -->
+
+        <section class="panel report-panel">
+
+            <div class="panel-header">
+
+                <div>
+
+                    <h3>
+                        Community Crime Heatmap
+                    </h3>
+
+                    <p>
+                        Relative crime intensity across
+                        high-volume community areas
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="communityHeatmap"
+                class="community-heatmap"
+            ></div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- OUTLIERS -->
+        <!-- ================================================= -->
+
+        <section class="panel report-panel">
+
+            <div class="panel-header">
+
+                <div>
+
+                    <h3>
+                        Statistical Outliers
+                    </h3>
+
+                    <p>
+                        Communities exceeding the IQR
+                        upper-bound threshold
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="outliers"
+                class="outlier-grid"
+            >
+
+                <div class="loading">
+                    Loading analysis...
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- INSIGHTS -->
+        <!-- ================================================= -->
+
+        <section class="panel report-panel chart-gallery">
+
+            <div class="panel-header">
+                <div>
+                    <h3>Visualization from MySQL Data</h3>
+                    <p>Matplotlib and Seaborn charts created from data read through the reporting views.</p>
+                </div>
+            </div>
+
+            <img src="/charts/09_mysql_crimes_by_year.png" alt="MySQL crime count per year chart">
+            <img src="/charts/10_mysql_top5_crime_types.png" alt="MySQL top five crime types chart">
+
+        </section>
+
+
+    </main>
+
+</div>
+
+
+<script
+    src="{{ url_for('static', filename='js/case4.js') }}"
+></script>
+
+
+</body>
+
+</html>

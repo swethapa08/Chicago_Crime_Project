@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        {% block title %}CrimeIQ{% endblock %}
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">A</div>
+
+            <div>
+                <h2>Analysis</h2>
+                <span>Chicago Crime Intelligence</span>
+            </div>
+        </div>
+
+
+        <nav>
+
+            <a
+                href="/"
+                class="{% if active_page == 'dashboard' %}active{% endif %}"
+            >
+                <span>⌂</span>
+                Dashboard
+            </a>
+
+
+            <a
+                href="/case1"
+                class="{% if active_page == 'case1' %}active{% endif %}"
+            >
+                <span>▥</span>
+                Crime Types
+            </a>
+
+
+            <a
+                href="/case2"
+                class="{% if active_page == 'case2' %}active{% endif %}"
+            >
+                <span>◉</span>
+                Arrest Analysis
+            </a>
+
+
+            <a
+                href="/case3"
+                class="{% if active_page == 'case3' %}active{% endif %}"
+            >
+                <span>◷</span>
+                Time & Patterns
+            </a>
+
+
+            <a
+                href="/case4"
+                class="{% if active_page == 'case4' %}active{% endif %}"
+            >
+                <span>⌖</span>
+                MySQL Reporting
+            </a>
+
+            <a
+                href="/reports"
+                class="{% if active_page == 'reports' %}active{% endif %}"
+            >
+                <span>▣</span>
+                Reports & Charts
+            </a>
+
+            <a
+                href="/patrol-requests"
+                class="{% if active_page == 'patrol_requests' %}active{% endif %}"
+            >
+                <span>🚓</span>
+                CRUD Patrol Management
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <div class="system-status">
+
+                <span class="status-dot"></span>
+
+                System Online
+
+            </div>
+
+            <small>
+                CPD Crime Analytics
+                <br>
+                2015 – 2023
+            </small>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+        {% block content %}
+        {% endblock %}
+
+    </main>
+
+</div>
+
+
+<script
+    src="{{ url_for('static', filename='js/common.js') }}"
+></script>
+
+
+{% block scripts %}
+{% endblock %}
+
+
+</body>
+
+</html>

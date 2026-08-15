@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>CrimeIQ | Chicago Crime Intelligence</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<div class="app">
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div>
+                <h2>Analysis</h2>
+                <span>Chicago Crime Intelligence</span>
+            </div>
+
+        </div>
+
+        <nav>
+
+            <a class="active" href="/">
+                <span>⌂</span>
+                Dashboard
+            </a>
+
+            <a href="/case1">
+                <span>▥</span>
+                Crime Types
+            </a>
+
+            <a href="/case2">
+                <span>◉</span>
+                Arrest Analysis
+            </a>
+
+            <a href="/case3">
+                <span>◷</span>
+                Time & Patterns
+            </a>
+
+            <a href="/case4">
+                <span>⌖</span>
+                MySQL Reporting
+            </a>
+
+            <a href="/reports">
+                <span>▣</span>
+                Reports & Charts
+            </a>
+
+            <a href="/patrol-requests">
+                <span>🚓</span>
+                CRUD Patrol Management
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <div class="system-status">
+                <span class="status-dot"></span>
+                System Online
+            </div>
+
+            <small>
+                CPD Crime Analytics<br>
+                2015 – 2023
+            </small>
+
+        </div>
+
+    </aside>
+
+    <main class="main">
+
+        <header class="topbar">
+
+            <div>
+
+                <p class="eyebrow">
+                    CHICAGO POLICE DEPARTMENT
+                </p>
+
+                <h1>
+                    Crime Intelligence Dashboard
+                </h1>
+
+                <p class="subtitle">
+                    Data-driven insights for crime prevention
+                    and resource allocation.
+                </p>
+                <p class="subtitle" style="margin-top: 8px; color: #cbd5e1;">
+                    Coverage window: 2015–2023
+                </p>
+
+            </div>
+
+            <button class="primary-btn"
+                    onclick="loadDataset()">
+
+                ↻ Load Dataset
+
+            </button>
+
+        </header>
+
+
+        <section class="kpi-grid">
+
+            <div class="kpi-card">
+
+                <div class="kpi-icon blue">
+                    ⌁
+                </div>
+
+                <div>
+                    <span>Total Crimes</span>
+                    <strong id="totalCrimes">—</strong>
+                    <small>Reported incidents</small>
+                </div>
+
+            </div>
+
+
+            <div class="kpi-card">
+
+                <div class="kpi-icon red">
+                    !
+                </div>
+
+                <div>
+                    <span>Arrests</span>
+                    <strong id="arrests">—</strong>
+                    <small>Cases resulting in arrest</small>
+                </div>
+
+            </div>
+
+
+            <div class="kpi-card">
+
+                <div class="kpi-icon orange">
+                    ⌂
+                </div>
+
+                <div>
+                    <span>Domestic Cases</span>
+                    <strong id="domesticCases">—</strong>
+                    <small>Domestic incidents</small>
+                </div>
+
+            </div>
+
+
+            <div class="kpi-card">
+
+                <div class="kpi-icon purple">
+                    %
+                </div>
+
+                <div>
+                    <span>Arrest Rate</span>
+                    <strong id="arrestRate">—</strong>
+                    <small>Overall rate</small>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="dashboard-grid">
+
+
+            <div class="panel large">
+
+                <div class="panel-header">
+
+                    <div>
+                        <h3>Crime Trend</h3>
+
+                        <p>
+                            Total reported crimes by year
+                        </p>
+                    </div>
+
+                    <span class="badge">
+                        2012–2016
+                    </span>
+
+                </div>
+
+                <div class="chart-container">
+
+                    <canvas id="crimeTrendChart"></canvas>
+
+                </div>
+
+            </div>
+
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <h3>Crime Categories</h3>
+
+                        <p>
+                            Top 10 crime types
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="chart-container">
+
+                    <canvas id="crimeCategoryChart"></canvas>
+
+                </div>
+
+            </div>
+
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <h3>Arrest Distribution</h3>
+
+                        <p>
+                            Crime outcomes
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="chart-container doughnut">
+
+                    <canvas id="arrestChart"></canvas>
+
+                </div>
+
+            </div>
+
+
+            <div class="panel large">
+
+                <div class="panel-header">
+
+                    <div>
+                        <h3>Crime Hotspots</h3>
+
+                        <p>
+                            Highest crime community areas
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="chart-container">
+
+                    <canvas id="communityChart"></canvas>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="quick-grid">
+
+            <a href="/case1" class="case-card">
+
+                <div class="case-number">
+                    01
+                </div>
+
+                <div>
+                    <h3>Crime Type Analysis</h3>
+
+                    <p>
+                        Explore the most common crime categories.
+                    </p>
+                </div>
+
+                <span>→</span>
+
+            </a>
+
+
+            <a href="/case2" class="case-card">
+
+                <div class="case-number">
+                    02
+                </div>
+
+                <div>
+                    <h3>Arrest Analysis</h3>
+
+                    <p>
+                        Analyze arrest rates and outcomes.
+                    </p>
+
+                </div>
+
+                <span>→</span>
+
+            </a>
+
+
+            <a href="/case3" class="case-card">
+
+                <div class="case-number">
+                    03
+                </div>
+
+                <div>
+                    <h3>Time & Patterns</h3>
+
+                    <p>
+                        Discover temporal crime patterns.
+                    </p>
+                </div>
+
+                <span>→</span>
+
+            </a>
+
+
+            <a href="/case4" class="case-card">
+
+                <div class="case-number">
+                    04
+                </div>
+
+                <div>
+                    <h3>Geographic Intelligence</h3>
+
+                    <p>
+                        Identify high-risk areas.
+                    </p>
+                </div>
+
+                <span>→</span>
+
+            </a>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/common.js') }}"></script>
+
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+
+</body>
+
+</html>

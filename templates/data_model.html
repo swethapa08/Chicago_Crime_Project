@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+>
+
+<title>Data Model</title>
+
+<link
+rel="stylesheet"
+href="{{ url_for('static', filename='css/style.css') }}"
+>
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+<div class="logo">
+Chicago Crime Analytics
+</div>
+
+<a href="/" class="nav-link">
+Dashboard
+</a>
+
+<a href="/usecase1" class="nav-link">
+Use Case 1
+</a>
+
+<a href="/usecase2" class="nav-link">
+Use Case 2
+</a>
+
+<a href="/usecase3" class="nav-link">
+Use Case 3
+</a>
+
+<a href="/usecase4" class="nav-link">
+Use Case 4
+</a>
+
+<a href="/data-model" class="nav-link active">
+Data Model
+</a>
+
+</div>
+
+
+<main class="main">
+
+<h1>
+Chicago Crime Data Model
+</h1>
+
+<p class="subtitle">
+Datasets used by the analytics system
+</p>
+
+
+<div class="model-grid">
+
+<div class="model-card">
+
+<h2>crimes</h2>
+
+<p>
+Main Chicago crime dataset.
+</p>
+
+<span>
+Primary analytical table
+</span>
+
+</div>
+
+
+<div class="model-card">
+
+<h2>communities</h2>
+
+<p>
+Chicago community area reference information.
+</p>
+
+</div>
+
+
+<div class="model-card">
+
+<h2>districts</h2>
+
+<p>
+Chicago police district information.
+</p>
+
+</div>
+
+
+<div class="model-card">
+
+<h2>beats</h2>
+
+<p>
+Chicago police beat reference information.
+</p>
+
+</div>
+
+
+<div class="model-card">
+
+<h2>wards</h2>
+
+<p>
+Chicago ward office reference information.
+</p>
+
+</div>
+
+
+<div class="model-card">
+
+<h2>iucr_codes</h2>
+
+<p>
+IUCR crime-code reference information.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="panel">
+
+<h2>
+Database Architecture
+</h2>
+
+<div class="architecture">
+
+<div>
+CSV Datasets
+</div>
+
+<div class="arrow">
+↓
+</div>
+
+<div>
+Pandas Data Processing
+</div>
+
+<div class="arrow">
+↓
+</div>
+
+<div>
+SQLite Database
+</div>
+
+<div class="arrow">
+↓
+</div>
+
+<div>
+SQL Reporting
+</div>
+
+<div class="arrow">
+↓
+</div>
+
+<div>
+Flask REST APIs
+</div>
+
+<div class="arrow">
+↓
+</div>
+
+<div>
+Web Dashboard
+</div>
+
+</div>
+
+</div>
+
+</main>
+
+</body>
+
+</html>

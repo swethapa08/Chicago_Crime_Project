@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}CrimeIQ | CRUD Patrol Management{% endblock %}
+
+{% block content %}
+<header class="topbar">
+    <div>
+        <p class="eyebrow">OPERATIONS</p>
+        <h1>CRUD Patrol Management</h1>
+        <p class="subtitle">Create and manage operational patrol requests generated from crime intelligence.</p>
+    </div>
+</header>
+
+<section class="patrol-layout">
+    <section class="panel patrol-form-panel">
+        <div class="panel-header">
+            <div>
+                <h3 id="formTitle">Create Patrol Request</h3>
+                <p>Enter the patrol deployment details.</p>
+            </div>
+        </div>
+
+        <form id="patrolRequestForm" class="patrol-form">
+            <input id="requestId" type="hidden">
+            <label>Patrol area *<input id="patrolArea" required placeholder="Near North"></label>
+            <label>District code *<input id="districtCode" type="number" min="1" required placeholder="18"></label>
+            <label>Ward number *<input id="wardNo" type="number" min="1" required placeholder="42"></label>
+            <label>Community code *<input id="communityCode" required placeholder="8"></label>
+            <label>Priority *
+                <select id="priority" required>
+                    <option value="HIGH">HIGH</option>
+                    <option value="CRITICAL">CRITICAL</option>
+                    <option value="MEDIUM">MEDIUM</option>
+                    <option value="LOW">LOW</option>
+                </select>
+            </label>
+            <label>Status *
+                <select id="status" required>
+                    <option value="PENDING">PENDING</option>
+                    <option value="IN_PROGRESS">IN_PROGRESS</option>
+                    <option value="COMPLETED">COMPLETED</option>
+                    <option value="CANCELLED">CANCELLED</option>
+                </select>
+            </label>
+            <label>Assigned officers *<input id="assignedOfficers" type="number" min="0" value="0" required></label>
+            <label>Perimeter (km)<input id="perimeterRadius" type="number" min="0" step="0.1" placeholder="2.5"></label>
+            <label class="full-width">Reason<textarea id="reason" rows="3" placeholder="High concentration of theft incidents"></textarea></label>
+            <label class="full-width">Requested by<input id="requestedBy" placeholder="CPD Officer"></label>
+            <div class="form-actions full-width">
+                <button type="submit" class="primary-btn" id="submitButton">Create Request</button>
+                <button type="button" class="secondary-btn" id="cancelEdit" hidden>Cancel edit</button>
+            </div>
+        </form>
+        <p class="api-error" id="formError"></p>
+    </section>
+
+    <section class="panel patrol-table-panel">
+        <div class="panel-header">
+            <div>
+                <h3>Active &amp; Historical Requests</h3>
+                <p id="requestCount">Loading requests…</p>
+            </div>
+            <button class="secondary-btn" id="refreshRequests">Refresh</button>
+        </div>
+        <div class="table-scroll">
+            <table class="patrol-table">
+                <thead><tr><th>ID</th><th>Area</th><th>District</th><th>Priority</th><th>Officers</th><th>Perimeter</th><th>Status</th><th>Actions</th></tr></thead>
+                <tbody id="patrolRequestsBody"></tbody>
+            </table>
+        </div>
+    </section>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/patrol_requests.js') }}"></script>
+{% endblock %}
