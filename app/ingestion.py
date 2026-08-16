@@ -317,22 +317,39 @@ def ingest_data():
         col for col, pct in missing_pct.items() if pct > 50
     ]
     print("\n8. COLUMNS WITH MORE THAN 50% MISSING")
+
     print("-" * 70)
 
+
+
     if columns_to_drop:
+
         print("Columns identified for removal:")
+
         for col in columns_to_drop:
+
             print(f" - {col}")
 
+
+
         # Drop only columns whose ORIGINAL missing percentage is > 50%
+
         df = df.drop(columns=columns_to_drop, errors="ignore")
 
+
+
         print(
+
             f"\n✓ Dropped {len(columns_to_drop)} column(s) "
+
             "with more than 50% missing values."
+
         )
+
     else:
+
         print("✓ No columns have more than 50% missing values.")
+
 
     print("\n9. UNIQUE CRIME TYPES")
     print("----------------------------------------------------------------------")
@@ -436,7 +453,6 @@ def ingest_data():
 
     connection = sqlite3.connect(Config.DATABASE_PATH)
     cursor = connection.cursor()
-    cursor.execute("DROP TABLE IF EXISTS patrol_requests")
     cursor.execute("DROP TABLE IF EXISTS crimes")
     database_df.to_sql("crimes", connection, if_exists="replace", index=False, chunksize=5000)
     cursor.execute("CREATE INDEX IF NOT EXISTS idx_crime_year ON crimes(Year)")

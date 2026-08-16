@@ -10,6 +10,7 @@ from .analysis import (
     crime_by_district
 )
 
+
 def ensure_report_directory():
     os.makedirs(
         Config.REPORTS_DIR,
@@ -380,6 +381,16 @@ def create_views(conn):
             metric,
             value
         FROM crime_summary
+        """
+    )
+
+    conn.execute(
+        """
+        CREATE VIEW vw_yearly_crime AS
+        SELECT
+            year,
+            count
+        FROM yearly_crime_summary
         """
     )
 

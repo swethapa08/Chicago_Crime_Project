@@ -18,6 +18,14 @@ class Config:
 
     CRIME_CSV = DATASET_PATH
 
+        
+    PATROL_REQUESTS_CSV = os.path.join(
+        BASE_DIR,
+        "Chicago_Datasets_Python",
+        "patrol_requests.csv"
+    )
+
+
     DATABASE_DIR = os.path.join(
         BASE_DIR,
         "database"
@@ -35,7 +43,9 @@ class Config:
     MYSQL_USER = os.getenv("MYSQL_USER", "root")
     MYSQL_PASSWORD = os.getenv("MYSQL_PASSWORD", "")
     MYSQL_DATABASE = os.getenv("MYSQL_DATABASE", "chicago_crime")
-    MYSQL_USE = os.getenv("USE_MYSQL", "false").strip().lower() in {"1", "true", "yes", "y"}
+    MYSQL_USE = os.getenv("USE_MYSQL", "false").strip().lower() in {
+        "1", "true", "yes", "y"
+    }
 
     REPORTS_DIR = os.path.join(
         BASE_DIR,

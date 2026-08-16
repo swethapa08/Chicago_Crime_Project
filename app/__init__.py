@@ -12,8 +12,11 @@ def create_app():
     )
 
     from .routes import api
+    from .database import initialize_patrol_requests_from_csv
 
     app.register_blueprint(api)
+
+    initialize_patrol_requests_from_csv()
 
     @app.route("/")
     def dashboard():

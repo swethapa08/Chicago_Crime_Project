@@ -11,7 +11,11 @@ from .analysis import (
     case3_time_analysis,
     case4_geographic_analysis
 )
-from .database import get_connection, ensure_patrol_requests_table
+from .database import (
+    get_connection,
+    ensure_patrol_requests_table,
+    sync_patrol_requests_to_csv 
+)
 
 
 api = Blueprint(
@@ -190,6 +194,9 @@ def create_patrol_request():
     ).fetchone()
     conn.commit()
     conn.close()
+
+    sync_patrol_requests_to_csv()
+
     return jsonify(patrol_request_to_dict(row)), 201
 
 
@@ -232,6 +239,9 @@ def update_patrol_request(request_id):
     ).fetchone()
     conn.commit()
     conn.close()
+
+    sync_patrol_requests_to_csv()
+
     return jsonify(patrol_request_to_dict(row))
 
 
@@ -244,9 +254,13 @@ def delete_patrol_request(request_id):
     )
     conn.commit()
     conn.close()
-    if cursor.rowcount == 0:
-        return jsonify({"status": "error", "error": "Patrol request not found."}), 404
-    return jsonify({"status": "success", "message": "Patrol request deleted."})
+
+    sync_patrol_requests_to_csv()
+
+    return jsonify({
+        "status": "success",
+        "message": "Patrol request deleted successfully."
+    })
 
 
 @api.route("/api/ingest", methods=["GET", "POST"])

@@ -1,6 +1,6 @@
 import os
 import sqlite3
-
+import pandas as pd
 from .config import Config
 
 
@@ -44,18 +44,110 @@ def get_connection():
 
 
 def ensure_patrol_requests_table():
-    """Create the operational patrol-request table used by the REST CRUD API."""
-    conn = get_connection()
-    table_exists = conn.execute(
-        "SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'patrol_requests'"
-    ).fetchone()
+    """
+    Create patrol_requests table if it does not exist.
+    Does not import CSV data.
+    """
 
-    if not table_exists:
-        conn.execute(PATROL_REQUESTS_SCHEMA)
+    conn = get_connection()
+
+    conn.execute(PATROL_REQUESTS_SCHEMA)
 
     conn.commit()
     conn.close()
 
+def initialize_patrol_requests_from_csv():
+    """
+    Seed patrol_requests from CSV only when the database table is empty.
+    This should be called during application initialization.
+    """
+
+    ensure_patrol_requests_table()
+
+    if not os.path.exists(Config.PATROL_REQUESTS_CSV):
+        return
+
+    conn = get_connection()
+
+    row_count = conn.execute(
+        "SELECT COUNT(*) FROM patrol_requests"
+    ).fetchone()[0]
+
+    if row_count == 0:
+
+        df = pd.read_csv(
+            Config.PATROL_REQUESTS_CSV
+        )
+
+        if not df.empty:
+
+            columns = [
+                "request_id",
+                "ward_no",
+                "district_code",
+                "community_code",
+                "patrol_area",
+                "priority",
+                "reason",
+                "requested_by",
+                "assigned_officers",
+                "status",
+                "perimeter_radius",
+                "requested_at",
+                "updated_at"
+            ]
+
+            df = df[columns]
+
+            df.to_sql(
+                "patrol_requests",
+                conn,
+                if_exists="append",
+                index=False
+            )
+
+            conn.commit()
+
+    conn.close()
+
+def sync_patrol_requests_to_csv():
+    """
+    Synchronize the complete patrol_requests table from SQLite
+    back to patrol_requests.csv.
+    """
+
+    ensure_patrol_requests_table()
+
+    conn = get_connection()
+
+    df = pd.read_sql_query(
+        """
+        SELECT
+            request_id,
+            ward_no,
+            district_code,
+            community_code,
+            patrol_area,
+            priority,
+            reason,
+            requested_by,
+            assigned_officers,
+            status,
+            perimeter_radius,
+            requested_at,
+            updated_at
+        FROM patrol_requests
+        ORDER BY request_id
+        """,
+        conn
+    )
+
+    conn.close()
+
+    df.to_csv(
+        Config.PATROL_REQUESTS_CSV,
+        index=False
+    )
 
 def table_exists(table_name="crimes"):
     """
