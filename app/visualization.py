@@ -1,3 +1,27 @@
+# ============================================================================
+# VISUALIZATION & CHARTS - ALL USE CASES
+# ============================================================================
+# This module provides chart creation functions for all use cases:
+#
+# USE CASE 1: Data Ingestion (N/A - handled in ingestion.py)
+#
+# USE CASE 2: Exploratory Analysis & Visualization
+#   - create_yearly_chart()                    - Crime trend over years
+#   - create_top_crimes_chart()                - Crime distribution by category
+#   - create_top_community_areas_chart()       - Top 10 community areas
+#   - create_crime_heatmap()                   - Heatmap by month & day of week
+#   - create_yearly_arrest_rate_chart()        - Arrests and crime outcomes
+#
+# USE CASE 3: Statistical Insights & Pattern Detection
+#   - create_hourly_chart()                    - Crime intensity by time
+#   - create_case3_outlier_boxplot_chart()     - Community area outliers (IQR)
+#   - create_case3_correlation_heatmap_chart() - Numeric feature correlations
+#
+# USE CASE 4: MySQL Reporting & Integration
+#   - create_mysql_reporting_visualizations()  - MySQL view-based charts
+#   - create_all_visualizations()              - Combined visualization pipeline
+# ============================================================================
+
 import os
 
 import matplotlib

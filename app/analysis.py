@@ -1,3 +1,15 @@
+# ============================================================================
+# USE CASE 2: EXPLORATORY ANALYSIS & VISUALIZATION OF CRIME
+# ============================================================================
+# This module provides exploratory data analysis functions for crime trends,
+# distributions, and patterns. Functions focus on:
+# - Crime trend over years
+# - Crime distribution by category
+# - Arrests and crime outcomes
+# - Heatmap of crime by month and day of week
+# - Top community areas
+# ============================================================================
+
 import sqlite3
 import numpy as np
 import pandas as pd

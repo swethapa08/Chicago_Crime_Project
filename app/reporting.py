@@ -1,3 +1,15 @@
+# ============================================================================
+# USE CASE 4: MYSQL REPORTING & INTEGRATION
+# ============================================================================
+# This module provides MySQL/database reporting functions for storing,
+# querying, and presenting analytical results. Functions focus on:
+# - Designing & Populating Summary Tables
+# - MySQL Queries (crime count per year, top 5 crime types, arrest count)
+# - Database Stored Views (vw_crime_yearly, vw_crime_by_category)
+# - Pandas Integration (reading views into DataFrames)
+# - Visualization from MySQL Data
+# ============================================================================
+
 import os
 import pandas as pd
 

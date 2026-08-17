@@ -154,9 +154,10 @@ def ingest_data():
     # before any fill operation, so the analysis and handling sections cannot
     # contradict one another (for example, location_description).
     missing_before_cleaning = df.isna().sum()
-    pre_clean_missing_pct = (
-        missing_before_cleaning / len(df) * 100
-    ).round(2)
+    pre_clean_missing_pct = np.round(
+        missing_before_cleaning / len(df) * 100,
+        2
+    )
 
     print("\n4. CLEAN DATA")
     print("----------------------------------------------------------------------")

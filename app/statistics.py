@@ -1,9 +1,36 @@
+# ============================================================================
+# USE CASE 3: STATISTICAL INSIGHTS & PATTERN DETECTION
+# ============================================================================
+# This module provides statistical analysis functions for detecting patterns,
+# outliers, and correlations in crime data. Functions focus on:
+# - Crime Intensity by Time (hourly distribution)
+# - Community Area Clusters & Outlier Detection (using IQR method)
+# - Crime Cross-Correlation (numeric features correlation matrix)
+# - Descriptive Statistics
+# ============================================================================
+
 import pandas as pd
 import numpy as np
+import sqlite3
 
 from .config import Config
 from .ingestion import load_csv
-from .analysis import find_column
+from .analysis import find_column, clean_dataframe
+
+
+def get_connection():
+    return sqlite3.connect(Config.DATABASE_PATH)
+
+
+def load_data():
+    conn = get_connection()
+    try:
+        df = pd.read_sql("SELECT * FROM crimes", conn)
+    finally:
+        conn.close()
+    if df.empty:
+        raise ValueError("Crime database is empty. Click Load Dataset first.")
+    return df
 
 
 def get_statistical_data():
@@ -165,6 +192,10 @@ def numerical_statistics():
 
 
 def iqr_outliers():
+    """
+    Identify outliers using the Interquartile Range (IQR) method.
+    Outliers are values that fall below Q1 - 1.5*IQR or above Q3 + 1.5*IQR
+    """
 
     df, _ = get_statistical_data()
 
@@ -215,7 +246,48 @@ def iqr_outliers():
     return result
 
 
+def community_area_outliers():
+    """
+    Identify community areas with crime counts that are statistical outliers
+    using the IQR method. Returns community areas with unusually high or low crime.
+    """
+    df = clean_dataframe(load_data())
+    
+    community_counts = df[df["community_area"] != "Unknown"]["community_area"].value_counts()
+    
+    if len(community_counts) == 0:
+        return {
+            "q1": 0, "q3": 0, "iqr": 0,
+            "lower_bound": 0, "upper_bound": 0,
+            "outliers": []
+        }
+    
+    q1 = community_counts.quantile(0.25)
+    q3 = community_counts.quantile(0.75)
+    iqr = q3 - q1
+    lower = q1 - 1.5 * iqr
+    upper = q3 + 1.5 * iqr
+    
+    outlier_areas = community_counts[(community_counts > upper) | (community_counts < lower)]
+    
+    return {
+        "q1": float(q1),
+        "q3": float(q3),
+        "iqr": float(iqr),
+        "lower_bound": float(lower),
+        "upper_bound": float(upper),
+        "outliers": [
+            {"community_area": str(area), "crime_count": int(count)}
+            for area, count in outlier_areas.items()
+        ]
+    }
+
+
 def correlation_matrix():
+    """
+    Calculate correlation matrix of numeric features in the crime dataset.
+    Shows relationships between Year, Month, Hour, Arrest, and Domestic fields.
+    """
 
     df, _ = get_statistical_data()
 
@@ -294,6 +366,8 @@ def run_use_case_3():
         "peak_hour": peak,
         "community_statistics":
             community_statistics(),
+        "community_outliers":
+            community_area_outliers(),
         "descriptive":
             numerical_statistics(),
         "iqr":

@@ -195,8 +195,6 @@ def create_patrol_request():
     conn.commit()
     conn.close()
 
-    sync_patrol_requests_to_csv()
-
     return jsonify(patrol_request_to_dict(row)), 201
 
 
@@ -240,8 +238,6 @@ def update_patrol_request(request_id):
     conn.commit()
     conn.close()
 
-    sync_patrol_requests_to_csv()
-
     return jsonify(patrol_request_to_dict(row))
 
 
@@ -254,8 +250,6 @@ def delete_patrol_request(request_id):
     )
     conn.commit()
     conn.close()
-
-    sync_patrol_requests_to_csv()
 
     return jsonify({
         "status": "success",
